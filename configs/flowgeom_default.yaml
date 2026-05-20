@@ -1,0 +1,38 @@
+data:
+  image_size: 256
+  latent_mode: identity
+  label_col: label
+  generator_col: generator_name
+  split_col: split
+probe:
+  probe_model_name: flux_surrogate
+  velocity_adapter: dummy_curved
+  frozen: true
+ode:
+  num_steps: 30
+  solver: euler
+  t_start: 1.0
+  t_end: 0.0
+d1:
+  enabled: true
+  eps: 0.01
+  num_probes: 16
+  timesteps: auto
+  use_finite_difference_loop: true
+  use_jvp_vjp_probe: false
+d2:
+  enabled: true
+coupling:
+  enabled: true
+calibration:
+  null_class: real
+  method: robust_zscore
+classifier:
+  model: logistic_regression
+  threshold_mode: validation_youden
+  manual_weights:
+    w1: 1.0
+    w2: 1.0
+    w3: 1.0
+outputs:
+  output_dir: outputs/
